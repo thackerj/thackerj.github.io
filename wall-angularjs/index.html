@@ -173,7 +173,7 @@ var courseCatalogueApp = angular.module('courseCatalogueApp', [
     'courseCatalogueControllers'
 ]);
 
-phonecatApp.config(['$routeProvider',
+courseCatalogueApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             when('/courses', {
@@ -189,7 +189,7 @@ phonecatApp.config(['$routeProvider',
                 controller: 'CourseDetailCtrl'
             }).
             otherwise({
-                redirectTo: '/phones'
+                redirectTo: '/courses'
             });
     }]);
                         </code></pre>
