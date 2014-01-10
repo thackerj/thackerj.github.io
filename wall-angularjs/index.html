@@ -149,20 +149,47 @@
                         UI animations, etc), but in separate "services"</li>
                     </ul>
 				</section>
+
 				<section>
-				<section>
-					<h2>Demo</h2>
-                    				<h3>Course Catalog</h3>
-				</section>
-				
-				<section>
-					<h2>Topics we'll touch on</h2>
-					<ul>
-						<li class="fragment">Controllers</li>
-						<li class="fragment">Views and Directives</li>
-						<li class="fragment">Services</li>
-					</ul>
-				</section>
+                    <section>
+                        <h2>Demo</h2>
+                        <h3>Course Catalog</h3>
+                    </section>
+
+                    <section>
+                        <h2>Topics we'll touch on</h2>
+                        <ul>
+                            <li class="fragment">Controllers</li>
+                            <li class="fragment">Views and Directives</li>
+                            <li class="fragment">Services</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Routing</h2>
+                        <pre><code data-trim>
+var phonecatApp = angular.module('phonecatApp', [
+    'ngRoute',
+    'phonecatControllers'
+]);
+
+phonecatApp.config(['$routeProvider',
+    function($routeProvider) {
+        $routeProvider.
+            when('/phones', {
+                templateUrl: 'partials/phone-list.html',
+                controller: 'PhoneListCtrl'
+            }).
+            when('/phones/:phoneId', {
+                templateUrl: 'partials/phone-detail.html',
+                controller: 'PhoneDetailCtrl'
+            }).
+            otherwise({
+                redirectTo: '/phones'
+            });
+    }]);
+                        </code></pre>
+                    </section>
 				</section>
 
                 <section>
