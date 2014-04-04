@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Pimple</title>
+
+		<meta name="description" content="An overview of dependency injection and Pimple for PHP">
+		<meta name="author" content="Jeremy Thacker">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Pimple</h1>
+					<h3>A dependency injection container for PHP</h3>
+                    <h5><a href="http://pimple.sensiolabs.org/">http://pimple.sensiolabs.org</a></h5>
+					<p>
+						<small>Created by Jeremy Thacker / <a href="mailto:thackerj@uci.edu">thackerj@uci.edu</a></small>
+					</p>
+				</section>
+
+				<section>
+                    <section>
+                        <h2>Refresher</h2>
+                        <h4>What is 'dependency injection'?</h4>
+                        <p style="text-align: left;">
+                            <strong>Dependency injection</strong> is a software design pattern in which one
+                            or more dependencies (or services) are injected, or passed by reference, into a
+                            dependent object (or client) and are made part of the client's state.
+                        </p>
+                        <p style="text-align: right;">
+                            <small>-Wikipedia</small>
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Car Class</h2>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+class Car
+{
+    private $body;
+    private $engine;
+    private $transmission;
+    private $wheels;
+
+    public function drive($pedalDistance)
+    {
+        $engine->applyGas($pedalDistance);
+        $force = $engine->getForce();
+        $force = $transmission->adjustForce($force);
+        $wheels->applyForce($force);
+    }
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Car Class - Constructor</h2>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+class Car
+{
+    public function __construct()
+    {
+        $this->body = new SedanBody();
+        $this->engine = new InlineFourEngine();
+        $this->transmission = new FiveSpeedAutomaticTransmission();
+        $this->wheels = new AllWeatherTires();
+    }
+}
+                        </code></pre>
+                        <h3 class="fragment" style="color: #F00;">BAD</h3>
+                    </section>
+                    <section>
+                        <h2>Car Class - Constructor</h2>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+class Car
+{
+    public function __construct(
+        AutoBodyInterface $body,
+        EngineInterface $engine,
+        TransmissionInterface $transmission,
+        WheelsInterface $wheels
+    ) {
+        $this->body = $body;
+        $this->engine = $engine;
+        $this->transmission = $transmission;
+        $this->wheels = $wheels;
+    }
+}
+                        </code></pre>
+                        <h3 class="fragment" style="color: #0F0;">GOOD</h3>
+                    </section>
+                    <section>
+                        <h2>Car Class - Constructor</h2>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+$economyCar = new Car(
+    new SmallSedanBody(),
+    new InlineFourEngine(),
+    new FiveSpeedAutomaticTransmission(),
+    new AllWeatherTires()
+);
+
+$sportsCar = new Car(
+    new RoadsterBody(),
+    new V8Engine(),
+    new SixSpeedManualTransmission(),
+    new SummerTires()
+);
+
+$testCar = new Car(
+    mock("AutoBodyInterface"),
+    mock("EngineInterface"),
+    mock("TransmissionInterface"),
+    mock("WheelsInterface")
+);
+                        </code></pre>
+                    </section>
+				</section>
+                <section>
+                    <section>
+                        <h3>Dependency injection in 3 easy steps</h3>
+                        <ol>
+                            <li class="fragment">Write your classes</li>
+                            <li class="fragment">Wire your class instances together</li>
+                            <li class="fragment">Execute your main method</li>
+                        </ol>
+                    </section>
+                    <section>
+                        <h3>Wiring together classes</h3>
+                        <img src="assets/car-composition.png" alt="car composition diagram">
+                    </section>
+                    <section>
+                        <h3>Wiring together classes</h3>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+$body = new EconomySedanBody();
+$engine = new InlineFourEngine();
+$transmission = new FiveSpeedAutomaticTransmission();
+$tires = new AllWeatherTires();
+
+$economyCar = new Car($body, $engine, $tranmission, $tires);
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Wiring together classes</h3>
+                        <img src="assets/blog-composition.png" alt="blog composition diagram">
+                    </section>
+                    <section>
+                        <h3>Wiring together classes</h3>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+$controller = ...?
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <h1>Enter Pimple!</h1>
+                </section>
+                <section>
+                    <section>
+                        <h2>What is Pimple?</h2>
+                        <p>Pimple is a dependency injection container for PHP.</p>
+                    </section>
+                    <section>
+                        <h2>What is a dependency injection container?</h2>
+                        <p>
+                            A dependency injection container handles all of the
+                            "wiring" for your application.
+                        </p>
+                        <p>
+                            <small>(See <a href="#/2">step 2</a> above.)</small>
+                        </p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>How does pimple work?</h2>
+                        <p class="fragment"><small>(I'm glad you asked)</small></p>
+                    </section>
+                    <section>
+                        <h3>1. Create a Pimple container</h3>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+require_once("/path/to/Pimple.php");
+
+$container = new Pimple();
+                        </code></pre>
+                        <p><small>Pimple also works beautifully with autoloading and Composer.</small></p>
+                    </section>
+                    <section>
+                        <h3>2. Define parameters (ie. settings)</h3>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+$container["blog_name"] = "My Awesome Blog";
+
+$container["database.host"] = "database.uci.edu";
+$container["database.user"] = "steve";
+$container["database.password"] = "mystrongpassword";
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>3. Define services</h3>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+$container["database.connection"] = function($c) {
+    return new DatabaseConnector(
+        $c["database.host"],
+        $c["database.user"],
+        $c["database.password"]
+    );
+};
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>4. Reuse services</h3>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+$container["user_repository"] = function($c) {
+    return new UserRepository($c["database.connector"]);
+};
+
+$container["blog_post_repository"] = function($c) {
+    return new BlogPostRepository($c["database.connector"]);
+};
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>4. Chain construction</h3>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+$container["layout"] = $container->factory(function($c) {
+    return new DefaultLayout();
+};
+
+$container["page"] = $container->factory(function($c) {
+    return new Page($c["layout"]);
+};
+
+$container["controller"] = $function($c) {
+    return new PostViewController(
+        $c["page"],
+        $c["blog_post_repository"],
+        $c["user_repository"]->getCurrentUser()
+    );
+};
+
+$container["controller"]->execute();
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>5. Package containers</h3>
+                        <pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+class DatabaseContainer extends Pimple
+{
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this['connection'] = function($c) {
+            return new DatabaseConnector(
+                $c["host"],
+                $c["user"],
+                $c["password"]
+            );
+        };
+    }
+}
+
+$container = new Pimple();
+
+$container["database"] = new DatabaseContainer();
+$container["database"]["host"] = "database.uci.edu";
+$container["database"]["user"] = "steve";
+$container["database"]["password"] = "mystrongpassword";
+
+$container["user_repository"] = function($c) {
+    return new UserRepository($c["database"]["connection"]);
+};
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <h3>Why use a Dependency Injection Container?</h3>
+                    <ul>
+                        <li class="fragment">Makes it easier to use dependency injection</li>
+                        <li class="fragment">Makes wiring your application <em>far</em> easier</li>
+                        <li class="fragment">Lazy loading!</li>
+                        <li class="fragment">It's lightweight: Pimple is 1 file, 80 lines</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>For more information see:</h3>
+                    <h2><a href="http://pimple.sensiolabs.org/">http://pimple.sensiolabs.org/</a></h2>
+                    <h3 class="fragment">Questions?</h3>
+                </section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
