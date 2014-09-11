@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Scrum - Backlog Refinement</title>
+
+		<meta name="description" content="An overview of the Backlog Refinement process">
+		<meta name="author" content="Jeremy Thacker">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- For the Backlog Refinement slide deck -->
+        <link rel="stylesheet" href="css/backlog-refinement.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Scrum</h1>
+					<h3>Backlog Refinement Meeting</h3>
+					<p>
+						<small>Created by Jeremy Thacker / <a href="mailto:thackerj@uci.edu">thackerj@uci.edu</a></small>
+					</p>
+				</section>
+
+                <section>
+                    <h2>Time Box</h2>
+                    <h3>2 hours</h3>
+                </section>
+
+                <section>
+                    <h2>Backlog refinement meeting</h2>
+                    <p>A chance to clean up our Product Backlog Items (PBIs)</p>
+                    <ul>
+                        <li>Refine stories</li>
+                        <li>Determine acceptance criteria</li>
+                        <li>Size PBIs</li>
+                        <li>Break up large PBIs</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>But first...</h2>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>PBIs</h2>
+                        <h4>Product Backlog Items</h4>
+                    </section>
+                    <section>
+                        <h2>Types</h2>
+                        <dl>
+                            <dt>Story</dt><dd>Self-contained unit of work</dd>
+                            <dt>Theme</dt><dd>A related group of somewhat independent stories</dd>
+                            <dt>Epic</dt><dd>A group of highly interdependent stories</dd>
+                        </dl>
+                        <p style="margin-top: 40px;">Stories at the top of the backlog,
+                            themes and epics lower.</p>
+                    </section>
+                    <section>
+                        <h2>What makes a good story?</h2>
+                        <h4>INVEST</h4>
+                    </section>
+                    <section>
+                        <h3><span class="red">I</span>NVEST</h3>
+                        <h5>Independent</h5>
+                    </section>
+                    <section>
+                        <h3>I<span class="red">N</span>VEST</h3>
+                        <h5>Negotiable</h5>
+                    </section>
+                    <section>
+                        <h3>IN<span class="red">V</span>EST</h3>
+                        <h5>Valuable</h5>
+                    </section>
+                    <section>
+                        <h3>INV<span class="red">E</span>ST</h3>
+                        <h5>Estimable</h5>
+                    </section>
+                    <section>
+                        <h3>INVE<span class="red">S</span>T</h3>
+                        <h5>Small</h5>
+                        <p class="small-text">A story should be no larger than
+                            one quarter of the team's time during the sprint.</p>
+                    </section>
+                    <section>
+                        <h3>INVES<span class="red">T</span></h3>
+                        <h5>Testable</h5>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Stories</h2>
+                        <h4>Writing better stories with Behavior Driven Development (BDD)</h4>
+                    </section>
+                    <section class="big-text text-left">
+                        <p>As a [role]</p>
+                        <p>I want [feature]</p>
+                        <p>So that [benefit]</p>
+                    </section>
+                    <section class="big-text text-left">
+                        <p><span class="red">As a</span> student</p>
+                        <p><span class="red">I want</span> to be notified that I have a new message when I sign in</p>
+                        <p><span class="red">So that</span> I know about it promptly</p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Acceptance Criteria</h2>
+                        <h4>How we know when a PBI meets its requirements</h4>
+                    </section>
+                    <section>
+                        <h3>More BDD</h3>
+                        <div class="big-text text-left">
+                            <p>Given [context] (and [more context] ...)</p>
+                            <p>When [event]</p>
+                            <p>Then [outcome] (and [another outcome] ...)</p>
+                        </div>
+                    </section>
+                    <section class="bit-text text-left">
+                        <p><span class="red">Given</span> that there is a new message that I have not seen</p>
+                        <p><span class="red">When</span> I sign in to EEE</p>
+                        <p><span class="red">Then</span> I will see a notice that there is a message for me</p>
+                    </section>
+                    <section class="bit-text text-left">
+                        <p><span class="red">Given that</span> I have a new message notice</p>
+                        <p><span class="red">When</span> I click on it</p>
+                        <p><span class="red">Then</span> I am taken to the message</p>
+                        <p><span class="red">And</span> the notice goes away</p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Definition of Done</h2>
+                        <h4>What does "done" mean?</h4>
+                    </section>
+                    <section>
+                        <h3>Done means whatever we agree it means</h3>
+                    </section>
+                    <section>
+                        <h3>Definition of Done</h3>
+                        <p>An auditable list of criteria that each PBI must
+                        meet be be considered completed</p>
+                    </section>
+                    <section class="big-text">
+                        <p><i>"98% done rounds to zero."</i></p>
+                    </section>
+                    <section>
+                        <h3>Examples of done criteria</h3>
+                        <ul>
+                            <li>Usability and performance standards</li>
+                            <li>Code refactoring standards</li>
+                            <li>Testing standards</li>
+                            <li>State standards (merged into integration branch)</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>What's our definition of done?</h3>
+                    </section>
+                </section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
