@@ -1,0 +1,16 @@
+.reveal section img.main-title-image {
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    width: 300px;
+    height: auto;
+}
+
+.reveal label {
+    vertical-align: top;
+    padding-right: 10px;
+}
+
+.highlight {
+    color: #D9AC23 !important;
+}
